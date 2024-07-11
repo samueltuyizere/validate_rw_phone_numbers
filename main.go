@@ -30,14 +30,22 @@ func GetPhoneNumberInfo(phoneNumber string) PhoneNbrInfo {
 	}
 }
 
+func NormalizePhoneNumber(phoneNumber string) string {
+	phoneNumber = strings.Replace(phoneNumber, " ", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, "-", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, "+", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, "(", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, ")", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, ".", "", -1)
+	phoneNumber = strings.Replace(phoneNumber, ",", "", -1)
+	return phoneNumber
+}
+
 func ValidateMtn(phoneNumber string) bool {
+	phoneNumber = NormalizePhoneNumber(phoneNumber)
 	if strings.HasPrefix(phoneNumber, "078") ||
 		strings.HasPrefix(phoneNumber, "079") {
 		return len(phoneNumber) == 10
-	}
-	if strings.HasPrefix(phoneNumber, "+25078") ||
-		strings.HasPrefix(phoneNumber, "+25079") {
-		return len(phoneNumber) == 13
 	}
 	if strings.HasPrefix(phoneNumber, "25078") ||
 		strings.HasPrefix(phoneNumber, "25079") {
@@ -47,13 +55,10 @@ func ValidateMtn(phoneNumber string) bool {
 }
 
 func ValidateAirtelTigo(phoneNumber string) bool {
+	phoneNumber = NormalizePhoneNumber(phoneNumber)
 	if strings.HasPrefix(phoneNumber, "072") ||
 		strings.HasPrefix(phoneNumber, "073") {
 		return len(phoneNumber) == 10
-	}
-	if strings.HasPrefix(phoneNumber, "+25072") ||
-		strings.HasPrefix(phoneNumber, "+25073") {
-		return len(phoneNumber) == 13
 	}
 	if strings.HasPrefix(phoneNumber, "25072") ||
 		strings.HasPrefix(phoneNumber, "25073") {
