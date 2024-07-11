@@ -66,3 +66,20 @@ func ValidateAirtelTigo(phoneNumber string) bool {
 	}
 	return false
 }
+
+func GetLocalFormat(phoneNumber string) string {
+	phoneNumber = NormalizePhoneNumber(phoneNumber)
+	if ValidateMtn(phoneNumber) {
+		if len(phoneNumber) == 10 {
+			return phoneNumber
+		}
+		return phoneNumber[2:]
+	}
+	if ValidateAirtelTigo(phoneNumber) {
+		if len(phoneNumber) == 10 {
+			return phoneNumber
+		}
+		return phoneNumber[2:]
+	}
+	return "unkown"
+}
